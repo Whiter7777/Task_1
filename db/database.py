@@ -27,7 +27,7 @@ class Payment_method(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     name: Mapped[str] = mapped_column(nullable=True)
 
-    # default= self.Payment_method - надо разобраться
+    # default= self.short_name - надо разобраться
 
     logo: Mapped[str] = mapped_column(nullable=True)
     short_name: Mapped[str]
