@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Test_Task</title>
+
+    <style>
+    td {padding:5px;}
+    button{margin: 5px;}
+    </style>
+
+</head>
+<body>
+
+    <script>
+    // Получение всех методов
+    async function getPaymentMethods() {
+        const response = await fetch("/payment_methods", {
+            method: "GET",
+            headers: { "Accept": "application/json" }
+        });
+        if (response.ok === true) {
+            const payment_methods = await response.json();
+            const rows = document.querySelector("tbody");
+            payment_methods.forEach(payment_method => rows.append(row(payment_method)));
+        }
+    }
+
+    // Добавление метода
+    async function createPaymentMethods(payment_methodName, payment_methodLogo, payment_methodShort_name, payment_methodDescription) {
+        const response = await fetch("/payment_methods", {
+            method: "POST",
+            headers: { "Accept": "application/json", "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: payment_methodName,
+                logo: payment_methodLogo,
+                short_name: payment_methodShort_name,
+                description: payment_methodDescription
+            })
+        });
+        if (response.ok === true) {
+            const payment_method = await response.json();
+            document.querySelector("tbody").append(row(payment_method));
+        }
+        else {
+            const error = await response.json();
+            console.log(error.message);
+        }
+    }
+
+    // Cоздание строки для таблицы
+    function row(payment_method) {
+        const tr = document.createElement("tr");
+        tr.setAttribute("data-rowid", payment_method.id);
+
+        const nameTd = document.createElement("td");
+        nameTd.append(payment_method.name);
+        tr.append(nameTd);
+
+    // ДАЛЕЕ, К СОЖАЛЕНИЮ, НЕ УСПЕЛ
+
+
+    </script>
+</body>
+
+</html>
